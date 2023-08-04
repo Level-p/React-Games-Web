@@ -7,12 +7,12 @@ import { Pagination } from '../../../hooks/Pagination'
 function GamesList({loading}) {
   const [currentGamePage, setCurrentPage]= useState(1)
   const [gamesPerPage] = useState(9)
-  const {latest, category} = useContext(GameContext)
+  const {category} = useContext(GameContext)
 
   // Get current posts
   const indexOfLastPage = currentGamePage * gamesPerPage
   const indexOfFirstPage = indexOfLastPage - gamesPerPage;
-  const currentPage = category.length === 0 ? latest.slice(indexOfFirstPage, indexOfLastPage) : category.slice(indexOfFirstPage, indexOfLastPage)
+  const currentPage = category.slice(indexOfFirstPage, indexOfLastPage)
 
   // Change page 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
@@ -26,7 +26,7 @@ function GamesList({loading}) {
               <GamesDisplay  key={item.id} item={item}/>
           ))}
           <div className='md:col-span-2 xl:col-span-3 col-span-1'>  
-          <Pagination postPerPage={gamesPerPage} totalPosts={category.length === 0 ? latest.length : category.length} paginate={paginate}/>
+          <Pagination postPerPage={gamesPerPage} totalPosts={category.length} paginate={paginate}/>
           </div>
       </div>
     )
